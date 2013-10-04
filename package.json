@@ -1,0 +1,24 @@
+{
+  "name" : "node-devent",
+  "version" : "0.0.1",
+  "description" : "Distributed event handling for Node.js",
+  "main" : "./index.js",
+  "dependencies" : {
+  },
+  "devDependencies" : {
+    "coffee-script": ">=1.6.3",
+    "mocha": ">=1.13.0",
+    "should": ">=1.3.0"
+  },
+  "scripts" : {
+  },
+  "repository" : {
+  },
+  "author" : {
+    "name" : "Wu Yuntao",
+    "email" : "wyt.brandon@gmail.com",
+    "url" : "http://github.com/wuyuntao"
+  },
+  "license" : "Apache License v2.0",
+  "engine" : ["node >=0.10.0"]
+}
