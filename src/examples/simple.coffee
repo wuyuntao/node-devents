@@ -1,15 +1,8 @@
 cluster = require "cluster"
-{DEventEmitter} = devent = require "../devent"
+{DEventEmitter, DEventData} = devent = require "../devent"
+messages = require "./messages"
 
 WORKERS = 2
-
-class PingMessage
-
-  constructor(@count, @message)
-
-  toString: ->
-    return "PingMessage[@count=#{@count}, @message=#{@message}]"
-
 
 startMaster = ->
   cluster.fork() for i in [1..WORKERS]
@@ -20,27 +13,34 @@ startWorker = ->
 
   options =
     ID: cluster.worker.id
-  devent.initialize options
+  devent.config options
 
   emitter = new DEventEmitter()
 
-  emitter.on "ping", (source, message) ->
-    console.log "Emitter #{emitter.id} received event from #{source.id}: #{message.toString()}"
+  emitter.on "ping", (source, data, event) ->
+    message = data.parse()
+    console.log "Emitter #{emitter.id} received event from #{source.id}:"
+    console.log "Message #{data.id}: count: #{message.count} message: #{message.message}"
+
     # Send response to source
     if message.count > 0
-      response = new PingMessage message.count - 1, "Ping from #{emitter.name}"
-      emitter.emit source.id, "ping", response
+      response = DEventData.createFromMessage messages.PING,
+        count: message.count - 1
+        message: "Ping from #{emitter.name}"
+      source.emit "ping", emitter.id, response
     else
       # Stop emitter
       console.log "Emitter #{emitter.id} received final message"
 
   # Send ping message to other emitters
-  emitter.register "simple_emitter_#{cluster.worker.id}", (error) ->
-    for i in [1..WORKERS]
-      if i != cluster.worker.id
-        message = new PingMessage 10, "Ping from #{emitter.name}"
-        emitter.emit "simple_emitter_#{i}", "ping", message
-    return
+  emitter.register "simple_emitter_#{cluster.worker.id}"
+  for i in [1..WORKERS]
+    if i != cluster.worker.id
+      emitter.resolve "simple_emitter_#{i}", (error, source) ->
+        response = DEventData.createFromMessage message.PING,
+          count: 10
+          message: "Ping from #{emitter.name}"
+        source.emit "ping", emitter.id, response
 
 main = ->
   if cluster.isMaster

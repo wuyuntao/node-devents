@@ -1,0 +1,6 @@
+package devent.examples;
+
+message Ping {
+    required int32  count       = 1 [default = 10];
+    required string message     = 2;
+}

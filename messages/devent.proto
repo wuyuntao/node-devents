@@ -1,0 +1,26 @@
+package devent;
+
+message EmitterID {
+    required uint64     id              = 1;
+    optional string     description     = 2;
+}
+
+message EventType {
+    required string     name            = 1;
+}
+
+message EventData {
+    required uint32     id              = 1;
+    required bytes      raw             = 2;
+}
+
+message Event {
+    required EmitterID  source          = 1;
+    required EmitterID  target          = 2;
+    required EventType  type            = 3;
+    required EventData  data            = 4;
+
+    optional uint32     request         = 5;
+    optional uint32     response        = 6;
+    optional uint32     timestamp       = 7;
+}
