@@ -4,7 +4,8 @@
   "description" : "Distributed event handling for Node.js",
   "main" : "./index.js",
   "dependencies" : {
-    "protobuf": ">=0.8.7"
+    "protobuf": ">=0.8.7",
+    "zmq": ">=2.5.1"
   },
   "devDependencies" : {
     "coffee-script": ">=1.6.3",
