@@ -1,4 +1,4 @@
 #!/bin/bash
 
 mkdir -p lib/
-coffee -o lib/ -cw src/
+coffee --bare -o lib/ -cw src/
