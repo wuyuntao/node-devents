@@ -21,6 +21,7 @@ startWorker = ->
     message = data.parse()
     console.log "Emitter #{emitter.id} received event from #{source.id}:"
     console.log "Message #{data.id}: count: #{message.count} message: #{message.message}"
+    console.log "=="
 
     # Send response to source
     if message.count > 0

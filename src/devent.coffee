@@ -8,8 +8,6 @@ class DEventEmitterId
 
   @_nextId = 1
 
-  @create: (workerId, emitterId) ->
-
   constructor: (data) ->
     unless data?
       data = settings.ID << 24 | DEventEmitterId._nextId++
@@ -26,6 +24,9 @@ class DEventEmitterId
     # 1. Need some validation
     # -- Wu Yuntao, 2013-10-04
     DEventEmitterManager.instance.emit "newEvent", new DEvent(source, this, event, message)
+
+  toString: ->
+    "[#{this.constructor.name} #{@data}]"
 
 class DEventEmitterManager extends EventEmitter
 
@@ -87,7 +88,7 @@ class DEventEmitterManager extends EventEmitter
           console.log "Sending event to remote emitter is not implemented"
         return
 
-      target.__emit event.type, event.data, event
+      emitter.__emit event.type, event.source, event.data, event
 
 DEventEmitterManager.instance = new DEventEmitterManager()
 
@@ -95,7 +96,7 @@ class DEventEmitter extends EventEmitter
 
   constructor: ->
     super
-    @id = DEventEmitterId.create()
+    @id = new DEventEmitterId()
     @isDestroyed = false
     DEventEmitterManager.instance.emit "newEmitter", this
 
@@ -125,6 +126,9 @@ class DEventEmitter extends EventEmitter
     return if @isDestroyed
     @isDestroyed = true
     DEventEmitterManager.instance.emit "removeEmitter", this
+
+  toString: ->
+    "[#{@constructor.name} #{id.toNumber()}]"
 
 class DEvent
 

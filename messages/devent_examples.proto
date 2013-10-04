@@ -4,3 +4,12 @@ message Ping {
     required int32  count       = 1 [default = 10];
     required string message     = 2;
 }
+
+message Pong {
+    required int32  count       = 1 [default = 10];
+    required string message     = 2;
+}
+
+message Final {
+    required string message     = 1;
+}
