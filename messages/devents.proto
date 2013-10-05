@@ -1,4 +1,4 @@
-package devent;
+package devents;
 
 message EmitterID {
     required uint64     id              = 1;

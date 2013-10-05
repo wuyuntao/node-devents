@@ -1,5 +1,5 @@
 cluster = require "cluster"
-{DEventEmitter, DEventData} = devent = require "../devent"
+{DEventEmitter, DEventData} = devents = require "../devents"
 messages = require "./messages"
 
 WORKERS = 2
@@ -13,7 +13,7 @@ startWorker = ->
 
   options =
     ID: cluster.worker.id
-  devent.config options
+  devents.config options
 
   emitter = new DEventEmitter()
 

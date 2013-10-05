@@ -1,0 +1,21 @@
+
+Ü
+messages/devents.protodevents",
+	EmitterID
+
+id (
+description (	"
+	EventType
+name (	"$
+	EventData
+
+id (
+raw ("É
+Event"
+source (2.devents.EmitterID"
+target (2.devents.EmitterID 
+type (2.devents.EventType 
+data (2.devents.EventData
+request (
+response (
+	timestamp (

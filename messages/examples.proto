@@ -1,4 +1,4 @@
-package devent.examples;
+package devents.examples;
 
 message Ping {
     required int32  count       = 1 [default = 10];

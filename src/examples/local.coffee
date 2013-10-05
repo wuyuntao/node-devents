@@ -7,7 +7,7 @@
 ###
 
 ## Module dependencies
-{DEventData, DEventEmitter} = require "../devent"
+{DEventData, DEventEmitter} = require "../devents"
 messages = require "./messages"
 
 class PingPong extends DEventEmitter
