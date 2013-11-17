@@ -13,6 +13,11 @@ startWorker = ->
 
   options =
     ID: cluster.worker.id
+    BIND_SOCKET: "tcp://0.0.0.0:#{3000+cluster.worker.id}"
+    SEED_SOCKETS: []
+  for i in [1..WORKERS]
+    if i != cluster.worker.id
+      options.SEED_SOCKETS.push "tcp://0.0.0.0:#{3000+i}"
   devents.config options
 
   emitter = new DEventEmitter()
